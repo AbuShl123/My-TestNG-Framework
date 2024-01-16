@@ -3,6 +3,7 @@ package com.abu.framework;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import org.testng.ITestContext;
 
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class ExtentManager {
             extent = new ExtentReports();
             extent.attachReporter(reporter);
             reporter.config().setDocumentTitle("Test Report");
+            reporter.config().setTheme(Theme.DARK);
         }
     }
 
@@ -42,7 +44,7 @@ public class ExtentManager {
 
     private static String getReportName(ITestContext ctx) {
         StringBuilder reportName = new StringBuilder();
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy"));
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d"));
         reportName.append("Report from ").append(date).append(" for ");
 
         String suiteName = ctx.getSuite().getName();
@@ -52,9 +54,10 @@ public class ExtentManager {
                 reportName.append(TestBase.getCurrentTest().name.toUpperCase());
                 break;
 
-            case "Regression":
+            case "Bulk Execution":
                 reportName.append("regression run");
                 break;
+
             case "Smoke":
                 reportName.append("smoke run");
                 break;

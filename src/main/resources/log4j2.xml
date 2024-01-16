@@ -11,7 +11,7 @@
 
         <File name="LogFile" fileName="logs/test.log">
             <PatternLayout>
-                <Pattern>%d %t [%c] %-5level - %M - %m%n</Pattern>
+                <Pattern>%d [%t] %-5level log - %m%n</Pattern>
             </PatternLayout>
         </File>
     </Appenders>

@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Bulk Execution">
+    <test name="Regression">
+        <packages>
+            <package name="com.example.tests"/>
+        </packages>
+    </test>
+</suite>

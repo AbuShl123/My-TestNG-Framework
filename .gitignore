@@ -1,5 +1,6 @@
 ### framework-specific ###
 /logs/
+/test-reports/
 
 ### maven ###
 target/

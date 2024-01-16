@@ -32,8 +32,11 @@ public abstract class BaseElement {
 
         try {
             element = WebUtils.findElement(by);
+        } catch (NoSuchElementException e) {
+            Logger.log(Level.ERROR, "Failure locating element - NoSuchElementException");
+            throw e;
         } catch (Exception e) {
-            Logger.log(Level.ERROR, "Failure finding element, " + e.getMessage());
+            Logger.log(Level.ERROR, "Failure locating element");
             throw e;
         }
 
@@ -63,28 +66,28 @@ public abstract class BaseElement {
     private static By findBy(@Nonnull Locator locator, String value) {
         By by;
         switch (locator) {
-            case CssSelector:
+            case cssSelector:
                 by = By.cssSelector(value);
                 break;
-            case Xpath:
+            case xpath:
                 by = By.xpath(value);
                 break;
-            case Id:
+            case id:
                 by = By.id(value);
                 break;
-            case Name:
+            case name:
                 by = By.name(value);
                 break;
-            case TagName:
+            case tagName:
                 by = By.tagName(value);
                 break;
-            case ClassName:
+            case className:
                 by = By.className(value);
                 break;
-            case LinkText:
+            case linkText:
                 by = By.linkText(value);
                 break;
-            case PartialLinkText:
+            case partialLinkText:
                 by = By.partialLinkText(value);
                 break;
             default:
