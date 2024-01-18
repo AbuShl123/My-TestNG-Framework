@@ -5,7 +5,6 @@ import com.abu.framework.FrameworkConstants;
 import com.abu.framework.TestBase;
 import com.abu.selenium.Driver;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.aventstack.extentreports.Status;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Level;
@@ -26,7 +25,11 @@ public class Logger {
     }
 
     static final private
-        org.apache.logging.log4j.Logger logger = LogManager.getLogger("defaultLogger");
+        org.apache.logging.log4j.Logger logger;
+
+    static {
+        logger  = LogManager.getLogger("defaultLogger");
+    }
 
     public static synchronized void log(Object details) {
         if (!TestBase.getCurrentTest().loggable) return;
@@ -70,7 +73,7 @@ public class Logger {
             sb.append("\tat ").append(stackTraceElement).append("\n");
         }
 
-        String exceptionStackTrace = String.format("<span style=\"color: red\">%s</span>",  sb);
+        String exceptionStackTrace = String.format("<pre style=\"color: red\">%s</pre>",  sb);
 
         captureScreenshot(exceptionStackTrace);
     }
@@ -78,13 +81,15 @@ public class Logger {
     private static void captureScreenshot(String message) {
         // TC001 1-17-2024
         var date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        String filePath = FrameworkConstants.SCREENSHOTS_DIRECTORY + TestBase.getCurrentTest().name.toUpperCase() + " " + date + ".png";
+        String fileName = TestBase.getCurrentTest().name.toUpperCase() + " " + date + ".png";
+        String filePath = FrameworkConstants.SCREENSHOTS_DIRECTORY + fileName;
 
         File screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.FILE);
 
         try {
             FileUtils.copyFile(screenshot, new File(filePath));
-            ExtentManager.getTest().fail(message, MediaEntityBuilder.createScreenCaptureFromPath(filePath).build());
+            ExtentManager.getTest().fail(message,
+                    MediaEntityBuilder.createScreenCaptureFromPath("./screenshots/" + fileName).build());
         } catch (IOException e) {
             Logger.log(Level.WARN, "Cannot attach screenshot");
             e.printStackTrace();

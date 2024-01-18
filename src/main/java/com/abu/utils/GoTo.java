@@ -14,8 +14,8 @@ public class GoTo {
         try {
             return clazz.getDeclaredConstructor().newInstance();
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-            Logger.log(Level.ERROR, "Failures while instantiating page class");
-            throw new RuntimeException(e.getMessage());
+            Logger.log(Level.FATAL, "Failure instantiating page object");
+            throw new RuntimeException(e);
         }
     }
 }

@@ -4,6 +4,7 @@ import com.abu.pages.IPage;
 import com.abu.utils.Logger;
 import com.abu.utils.PostActions;
 import com.abu.utils.Waits;
+import com.abu.utils.WebUtils;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -59,7 +60,7 @@ public class Control<T extends IPage> extends BaseElement {
         return doIf(isDisplayed());
     }
 
-    // action methods
+    // action methods:
 
     public T click() {
         if (conditionFails()) return page;
@@ -82,7 +83,7 @@ public class Control<T extends IPage> extends BaseElement {
 
         try {
             getElement().sendKeys(s);
-            Logger.log("Enter text to " + name + toHTML());
+            Logger.log("Enter text \"" + s + "\" to " + name + toHTML());
         } catch (Exception e) {
             Logger.log(ERROR, "Couldn't enter text \"" + s + "\" to " + name + toHTML());
             throw e;
@@ -93,7 +94,7 @@ public class Control<T extends IPage> extends BaseElement {
         return page;
     }
 
-    // assertions methods
+    // assertions methods:
 
     public T assertDisplayed() {
         if (conditionFails()) return page;
@@ -117,7 +118,15 @@ public class Control<T extends IPage> extends BaseElement {
         return page;
     }
 
-    // wait methods
+    public T moveToElement() {
+        if (conditionFails()) return page;
+
+        WebUtils.getActions().moveToElement(getElement()).perform();
+
+        return page;
+    }
+
+    // wait methods:
 
     public T waitUntilDisplayed() {
         if (conditionFails()) return page;
@@ -132,7 +141,7 @@ public class Control<T extends IPage> extends BaseElement {
         return page;
     }
 
-    // return methods
+    // return methods:
 
     public boolean isDisplayed() {
         try {

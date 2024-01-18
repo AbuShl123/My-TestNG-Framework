@@ -2,7 +2,7 @@
 <suite name="Bulk Execution">
     <test name="Regression">
         <packages>
-            <package name="com.example.tests"/>
+            <package name="com.abu.tests"/>
         </packages>
     </test>
 </suite>

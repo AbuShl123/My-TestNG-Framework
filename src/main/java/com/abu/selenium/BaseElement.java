@@ -8,7 +8,6 @@ import org.openqa.selenium.WebElement;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 
 public abstract class BaseElement {
@@ -32,11 +31,8 @@ public abstract class BaseElement {
 
         try {
             element = WebUtils.findElement(by);
-        } catch (NoSuchElementException e) {
-            Logger.log(Level.ERROR, "Failure locating element - NoSuchElementException");
-            throw e;
         } catch (Exception e) {
-            Logger.log(Level.ERROR, "Failure locating element");
+            Logger.log(Level.ERROR, "Failure locating element: " + name + toHTML());
             throw e;
         }
 
@@ -47,7 +43,7 @@ public abstract class BaseElement {
         return WebUtils.findElements(by);
     }
 
-    public <T extends Control<?>> T get(int i, T control) {
+    protected  <T extends Control<?>> T get(int i, T control) {
         List<WebElement> elements = getElements();
         if (i >= elements.size()) return null;
 

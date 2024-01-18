@@ -15,4 +15,8 @@ public enum PostActions implements Runnable {
     public void run() {
         action.run();
     }
+
+    public static Runnable dynamic(Runnable r) {
+        return r;
+    }
 }

@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="info">
-    <Properties>
-        <Property name="pattern">%d [%t] %-5level log - %m%n</Property>
-    </Properties>
-
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="${pattern}"/>
+        <!--Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%t] %-5level log - %m%n"/>
+        </Console-->
+
+        <!-- INFO Appender -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d [%t] %-5level - %m%n"/>
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="ACCEPT" />
+            </Filters>
         </Console>
 
-        <File name="LogFile" fileName="logs/test.log">
+        <!-- ERROR Appender -->
+        <Console name="STDERR" target="SYSTEM_ERR">
+            <PatternLayout pattern="%d [%t] %-5level - %m%n"/>
+            <Filters>
+                <ThresholdFilter level="WARN" onMatch="ACCEPT"/>
+            </Filters>
+        </Console>
+
+        <File name="LogFile" fileName="logs/${logfile.name}.log">
             <PatternLayout>
                 <Pattern>%d [%t] %-5level log - %m%n</Pattern>
             </PatternLayout>
@@ -18,11 +30,13 @@
 
     <Loggers>
         <Logger name="defaultLogger" level="info" additivity="false">
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="STDERR"/>
             <AppenderRef ref="LogFile"/>
         </Logger>
-        <Root level="error">
-            <AppenderRef ref="Console"/>
+
+        <Root level="info">
+            <AppenderRef ref="STDOUT"/>
         </Root>
     </Loggers>
 </Configuration>

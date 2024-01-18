@@ -6,6 +6,6 @@ public interface FrameworkConstants {
 
     String REPORT_DIRECTORY = System.getProperty("user.dir") + "\\test-reports\\";
 
-    String SCREENSHOTS_DIRECTORY = REPORT_DIRECTORY + "\\screenshots\\";
+    String SCREENSHOTS_DIRECTORY = REPORT_DIRECTORY + "screenshots\\";
 
 }

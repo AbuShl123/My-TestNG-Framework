@@ -27,7 +27,7 @@ public class ExtentManager {
             extent = new ExtentReports();
             extent.attachReporter(reporter);
             reporter.config().setDocumentTitle("Test Report");
-            reporter.config().setTheme(Theme.DARK);
+            reporter.config().setTheme(Theme.STANDARD);
         }
     }
 

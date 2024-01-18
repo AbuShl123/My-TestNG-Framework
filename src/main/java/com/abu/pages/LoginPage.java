@@ -1,32 +1,27 @@
 package com.abu.pages;
 
 import com.abu.selenium.Control;
-import com.abu.selenium.Locator;
+import com.abu.selenium.ControlFactory;
+import com.abu.selenium.ControlWith;
 
 public class LoginPage implements IPage {
 
-    public Control<LoginPage> usernameInput =
-            new Control<>(this, Locator.name,
-                    "username",
-                    "Username input field");
+    public LoginPage() {
+        ControlFactory.initControls(this);
+    }
 
-    public Control<LoginPage> passwordInput =
-            new Control<>(this, Locator.cssSelector,
-                    "input[type='password']",
-                    "Password input field");
+    @ControlWith(name = "username", description = "Username input field")
+    public Control<LoginPage> usernameInput;
 
-    public Control<LoginPage> submitBtn =
-            new Control<>(this, Locator.id,
-                    "sumit",
-                    "Submit button");
+    @ControlWith(css = "input[type='password']", description = "Password input field")
+    public Control<LoginPage> passwordInput;
 
-    public Control<LoginPage> postTitle =
-            new Control<>(this, Locator.className,
-                    "post-title",
-                    "Post title");
+    @ControlWith(id = "submit", description = "Submit button")
+    public Control<LoginPage> submitBtn;
 
-    public Control<LoginPage> logoutBtn =
-            new Control<>(this, Locator.linkText,
-                    "Log out",
-                    "Log out button");
+    @ControlWith(className = "post-title", description = "Post title")
+    public Control<LoginPage> postTitle;
+
+    @ControlWith(linkText = "Log out", description = "Log out button")
+    public Control<LoginPage> logoutBtn;
 }

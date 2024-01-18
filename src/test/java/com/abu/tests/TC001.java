@@ -7,8 +7,7 @@ import com.abu.utils.GoTo;
 import org.testng.annotations.Test;
 
 public class TC001 extends TestBase {
-
-    @Test(description = "Verify user can successfully login the application")
+    @Test(description = "User successful login")
     public void tc001() {
         Driver.getDriver().navigate().to("https://practicetestautomation.com/practice-test-login/");
 
