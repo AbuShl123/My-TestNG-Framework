@@ -56,7 +56,7 @@ public class Logger {
 
     public static synchronized void consoleLog(Level level, Object details) {
         String message = removeColors(updateMessage(getString(details)));
-        logger.log(level, removeColors(message));
+        logger.log(level, message);
     }
 
     public static synchronized void logException(Throwable e) {

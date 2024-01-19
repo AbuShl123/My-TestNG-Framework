@@ -26,6 +26,7 @@ public abstract class TestBase {
 
     @BeforeMethod(alwaysRun = true)
     public void beforeMethod(ITestContext ctx, Method method) {
+        LogFactory.setLogProps(ctx, method);
         tests.put((int) Thread.currentThread().getId(), new TestObject(method.getName()));
         Test test = method.getAnnotation(Test.class);
         ExtentManager.startReport(ctx, method.getName().toUpperCase() + ": " + test.description());
