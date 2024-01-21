@@ -20,7 +20,7 @@ public class ControlFactory {
         Field[] declaredFields = clazz.getDeclaredFields();
 
         for (Field field : declaredFields) {
-            ControlWith fieldAnnotation = field.getAnnotation(ControlWith.class);
+            ControlBy fieldAnnotation = field.getAnnotation(ControlBy.class);
 
             if (fieldAnnotation == null) continue;
 
@@ -34,7 +34,7 @@ public class ControlFactory {
         }
     }
 
-    private static <T extends IPage> Control<T> getControl(T page, ControlWith annotation) {
+    private static <T extends IPage> Control<T> getControl(T page, ControlBy annotation) {
         Locator locator;
         StringBuilder value = new StringBuilder();
         String name;
@@ -47,7 +47,7 @@ public class ControlFactory {
         return new Control<>(page, locator, value.toString(), name, postActions);
     }
 
-    private static Locator findLocator(ControlWith annotation, StringBuilder value) {
+    private static Locator findLocator(ControlBy annotation, StringBuilder value) {
         if (!"".equals(annotation.css())) {
             value.append(annotation.css());
             return Locator.cssSelector;

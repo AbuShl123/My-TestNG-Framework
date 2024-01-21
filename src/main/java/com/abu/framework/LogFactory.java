@@ -11,10 +11,16 @@ public class LogFactory {
     private LogFactory() {
     }
 
-    public static void setLogProps(ITestContext ctx, Method method) {
+    synchronized static void setLogProps(ITestContext ctx, Method method) {
+        clearLogs();
+        setLogFileName(ctx, method);
+        System.out.println(System.getProperty("logfile.name"));
+    }
+
+    private static void setLogFileName(ITestContext ctx, Method method) {
         StringBuilder logFileName = new StringBuilder();
 
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM"));
 
         switch (ctx.getSuite().getName()) {
             case "Default Suite":
@@ -30,10 +36,17 @@ public class LogFactory {
                 logFileName.append(ctx.getSuite().getName());
         }
 
+        if (Thread.currentThread().getName().equals("main")) {
+            logFileName.append(" [main]");
+        } else {
+            logFileName.append(" [").append(Thread.currentThread().getName()).append("]");
+        }
+
         logFileName.append(" ").append(date);
-
-        System.out.println(logFileName);
-
         System.setProperty("logfile.name", logFileName.toString());
+    }
+
+    private static void clearLogs() {
+
     }
 }

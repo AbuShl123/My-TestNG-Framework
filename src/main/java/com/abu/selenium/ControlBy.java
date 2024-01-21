@@ -9,7 +9,10 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ControlWith {
+public @interface ControlBy {
+    PostActions[] postActions() default PostActions.NONE;
+
+    String description();
 
     String css() default "";
 
@@ -26,8 +29,4 @@ public @interface ControlWith {
     String tagName() default "";
 
     String id() default "";
-
-    PostActions[] postActions() default PostActions.NONE;
-
-    String description();
 }

@@ -2,7 +2,6 @@ package com.abu.framework;
 
 import com.abu.selenium.Driver;
 import com.abu.utils.Logger;
-import org.apache.logging.log4j.ThreadContext;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
@@ -35,16 +34,14 @@ public abstract class TestBase {
 
     @AfterMethod(alwaysRun = true)
     public void afterMethod(ITestResult result) {
-        reportTearDownMethod(result);
+        this.reportTearDownMethod(result);
         ExtentManager.flush();
         Driver.close();
-        ThreadContext.clearAll();
     }
 
     private void reportTearDownMethod(ITestResult result) {
         if (result.isSuccess()) {
             Logger.consoleLog("passed.");
-
         } else if (result.getStatus() == ITestResult.FAILURE) {
             Throwable e = result.getThrowable();
             Logger.logException(e);
