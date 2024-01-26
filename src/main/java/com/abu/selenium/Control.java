@@ -30,7 +30,7 @@ public class Control<T extends IPage> extends BaseElement {
     /**
      * This method is useful if you want to operate upon the certain web-element which can be found in the List of web-elements when calling getElements() function
      * @param i the web-element index in the list of elements that is to be operated (starting from 0)
-     * @return the same control instance, but with the altered 'element' field in the BaseElement parent class
+     * @return null if index is out of bounce, otherwise the current control instance
      */
     public Control<T> get(int i) {
         return super.get(i, this);
@@ -94,7 +94,7 @@ public class Control<T extends IPage> extends BaseElement {
         return page;
     }
 
-    // assertions methods:
+    // assertion methods:
 
     public T assertDisplayed() {
         if (conditionFails()) return page;

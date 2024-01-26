@@ -21,7 +21,7 @@
             </Filters>
         </Console>
 
-        <File name="LogFile" fileName="logs/${sys:logfile.name}.log">
+        <File name="LogFile" fileName="${sys:logfile}">
             <PatternLayout>
                 <Pattern>%d [%t] %-5level log - %m%n</Pattern>
             </PatternLayout>

@@ -8,45 +8,55 @@ import java.time.format.DateTimeFormatter;
 
 public class LogFactory {
 
+    private static final String LOG_DIRECTORY = "logs/";
+
     private LogFactory() {
     }
 
     synchronized static void setLogProps(ITestContext ctx, Method method) {
         clearLogs();
         setLogFileName(ctx, method);
-        System.out.println(System.getProperty("logfile.name"));
+        System.out.println("LOG: " + System.getProperty("logfile"));
     }
 
     private static void setLogFileName(ITestContext ctx, Method method) {
-        StringBuilder logFileName = new StringBuilder();
+        StringBuilder logFileName = new StringBuilder(LOG_DIRECTORY);
 
-        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM"));
+        String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String filename = getFileName(ctx, method);
+        String thread = getThreadName();
 
-        switch (ctx.getSuite().getName()) {
-            case "Default Suite":
-                logFileName.append(method.getName());
-                break;
-            case "Bulk Execution":
-                logFileName.append("regression");
-                break;
-            case "Smoke Execution":
-                logFileName.append("smoke");
-                break;
-            default:
-                logFileName.append(ctx.getSuite().getName());
-        }
+        logFileName
+                .append(date)
+                .append("/")
+                .append(filename)
+                .append(thread)
+                .append(".log");
 
-        if (Thread.currentThread().getName().equals("main")) {
-            logFileName.append(" [main]");
-        } else {
-            logFileName.append(" [").append(Thread.currentThread().getName()).append("]");
-        }
-
-        logFileName.append(" ").append(date);
-        System.setProperty("logfile.name", logFileName.toString());
+        System.setProperty("logfile", logFileName.toString());
     }
 
     private static void clearLogs() {
 
+    }
+
+    private static String getThreadName() {
+        if (!"main".equals(Thread.currentThread().getName())) {
+            return String.format(" [%s]", Thread.currentThread().getName());
+        }
+
+        return "";
+    }
+
+    private static String getFileName(ITestContext ctx, Method method) {
+        switch (ctx.getSuite().getName()) {
+            case "Default Suite": return method.getName();
+
+            case "Bulk Execution": return "regression";
+
+            case "Smoke Execution": return "smoke";
+
+            default: return ctx.getSuite().getName();
+        }
     }
 }
