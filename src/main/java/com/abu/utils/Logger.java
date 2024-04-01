@@ -32,7 +32,7 @@ public class Logger {
     }
 
     public static synchronized void log(Object details) {
-        if (!TestBase.getCurrentTest().loggable) return;
+        if (!TestBase.getCurrentTest().isLoggable()) return;
         String message = getString(details);
 
         logger.info(updateMessage(removeColors(message)));
@@ -41,7 +41,7 @@ public class Logger {
     }
 
     public static synchronized void log(Level level, Object details) {
-        if (!TestBase.getCurrentTest().loggable) return;
+        if (!TestBase.getCurrentTest().isLoggable()) return;
         String message = getString(details);
 
         logger.log(level, updateMessage(removeColors(message)));
@@ -81,7 +81,7 @@ public class Logger {
     private static void captureScreenshot(String message) {
         // TC001 1-17-2024
         var date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        String fileName = TestBase.getCurrentTest().name.toUpperCase() + " " + date + ".png";
+        String fileName = TestBase.getCurrentTest().getName().toUpperCase() + " " + date + ".png";
         String filePath = FrameworkConstants.SCREENSHOTS_DIRECTORY + fileName;
 
         File screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.FILE);

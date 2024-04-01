@@ -51,7 +51,7 @@ public class ExtentManager {
 
         switch (suiteName) {
             default:
-                reportName.append(TestBase.getCurrentTest().name.toUpperCase());
+                reportName.append(TestBase.getCurrentTest().getName().toUpperCase());
                 break;
 
             case "Bulk Execution":

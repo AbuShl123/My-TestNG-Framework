@@ -23,7 +23,7 @@ public class LogFactory {
         StringBuilder logFileName = new StringBuilder(LOG_DIRECTORY);
 
         String date = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        String filename = getFileName(ctx, method);
+        String filename = getTestName(ctx, method);
         String thread = getThreadName();
 
         logFileName
@@ -37,9 +37,12 @@ public class LogFactory {
     }
 
     private static void clearLogs() {
-
+        // TODO: delete old logs
     }
 
+    /**
+     * @return the current thread name if the thread is not named 'main'. Otherwise, returns empty string
+     */
     private static String getThreadName() {
         if (!"main".equals(Thread.currentThread().getName())) {
             return String.format(" [%s]", Thread.currentThread().getName());
@@ -48,7 +51,10 @@ public class LogFactory {
         return "";
     }
 
-    private static String getFileName(ITestContext ctx, Method method) {
+    /**
+     * @return the name of the test suite. For a single TC returns the @Test method name, for a suite returns the name of the test suite
+     */
+    private static String getTestName(ITestContext ctx, Method method) {
         switch (ctx.getSuite().getName()) {
             case "Default Suite": return method.getName();
 

@@ -19,7 +19,7 @@ public abstract class TestBase {
 
     private final static Map<Integer, TestObject> tests = new HashMap<>();
 
-    public static TestObject getCurrentTest() {
+    public synchronized static TestObject getCurrentTest() {
         return tests.get((int) Thread.currentThread().getId());
     }
 
