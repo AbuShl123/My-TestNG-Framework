@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Git') {
             steps {
-                git branch: 'master', credentialsId: 'Jenkins', url: 'https://github.com/Calrax/web-automation'
+                git branch: 'master', credentialsId: 'Jenkins', url: 'https://github.com/...'
             }
         }
 
@@ -30,8 +30,6 @@ pipeline {
             }
         }
     }
-
-
 
     post {
         always {

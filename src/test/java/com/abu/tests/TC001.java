@@ -20,7 +20,7 @@ public class TC001 extends TestBase {
                 .submitBtn.click()
                 .postTitle.waitUntilDisplayed()
                 .postTitle.assertDisplayed()
-                .postTitle.assertTextEquals("Logged In Successfully")
+                .postTitle.assertTextEquals("Log In Successful")
                 .logoutBtn.ifDisplayed().click();
     }
 }

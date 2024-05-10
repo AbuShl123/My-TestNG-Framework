@@ -5,6 +5,7 @@ import com.abu.utils.Logger;
 import com.abu.utils.PostActions;
 import com.abu.utils.Waits;
 import com.abu.utils.WebUtils;
+import org.apache.commons.logging.Log;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -108,11 +109,15 @@ public class Control<T extends IPage> extends BaseElement {
 
     public T assertTextEquals(String expectedText) {
         if (conditionFails()) return page;
-
         String actualText = getText();
+        String failMsg = "Element text validation failed. Expected: '" + expectedText + "', actual: '" + actualText + "' on " + name + toHTML();
 
-        Assert.assertEquals(actualText, expectedText,
-                "Element text validation failed. Expected: " + expectedText + ", actual: " + actualText + " on " + name + toHTML());
+        try {
+            Assert.assertEquals(actualText, expectedText, failMsg);
+        } catch (AssertionError e) {
+            Logger.log(ERROR, failMsg);
+            throw e;
+        }
 
         Logger.log("Element text is verified, \"" + expectedText + "\" on " + name + toHTML());
         return page;
